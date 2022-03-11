@@ -1,28 +1,25 @@
 import React from 'react';
-import {Route,Switch,Redirect} from "react-router-dom";
+import {Route, Switch, Redirect, Routes} from "react-router-dom";
 import {privateRoutes, publicRoutes} from "../routes";
 import {CHAT_ROUTE, LOGIN_ROUTE} from "../utils/const";
 
 const AppRouter = () => {
-    const user  = false;
-    return user ?
-        (
-            <Switch>
-                {privateRoutes.map(({path, Component}) =>
-                <Route path={path} component={Component} exact={true}/>
-                )}
-                <Redirect to={CHAT_ROUTE}/>
-            </Switch>
-        )
-        :
-        (
-            <Switch>
-                {publicRoutes.map(({path, Component}) =>
-                    <Route path={path} component={Component} exact={true}/>
-                )}
-                <Redirect to={LOGIN_ROUTE}/>
-            </Switch>
-        )
+    const user = false;
+    return <Routes>
+        {user
+            ? (
+                privateRoutes.map(({path, Element, toPath}) =>
+                    <Route key={path} path={path} element={
+                        <Element to={toPath ? toPath : ''}/>}
+                    />)
+
+            )
+            : (
+                publicRoutes.map(({path, Element, toPath}) =>
+                    <Route key={path} path={path} element={
+                        <Element to={toPath ? toPath : ''}/>}
+                    />))}
+    </Routes>
 };
 
 export default AppRouter;
