@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {getAuth} from "firebase/auth";
 import {useAuthState} from "react-firebase-hooks/auth";
 import firebase from 'firebase/compat/app';
@@ -27,9 +27,10 @@ const Chat = () => {
     }
 
     const [messages, loading] = useCollectionData(collection(db, 'messages'));
-    // if(!loading){console.log(messages.sort((a,b) => a.createdAt.nanoseconds > b.createdAt.nanoseconds));}
-    if (loading) return <Loader/>
+    // setDataMessages(messages.sort((a, b) => a.createdAt.nanoseconds > b.createdAt.nanoseconds))
 
+    // if(!loading){console.log(messages.sort((a,b) => a.createdAt.nanoseconds > b.createdAt.nanoseconds));}
+    if (loading) {return <Loader/>} else {
     return (
         <Container>
             <Grid container
@@ -64,7 +65,7 @@ const Chat = () => {
                 </Grid>
             </Grid>
         </Container>
-    );
+    )};
 };
 
 export default Chat;
