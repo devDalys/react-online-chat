@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c0c12d64-0fc1-43d6-8e88-ceb6f9ab86ef" name="Avselectro">
+        <fileTransfer rootFolder="/var/www/avselectro" accessType="SFTP" host="185.32.180.111" port="2022" sshConfigId="cf69f548-12a4-402e-90e0-36c2c1acdc04" sshConfig="avselectro@185.32.180.111:2022 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
