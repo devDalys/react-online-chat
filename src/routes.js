@@ -4,7 +4,7 @@ import Chat from "./components/Chat";
 
 export const publicRoutes = [
     {path: LOGIN_ROUTE, Element: Login},
-    {path: "*",Element:Login,  toPath: LOGIN_ROUTE }
+    {path: "*",Element:Login,  toPath: LOGIN_ROUTE  }
 ]
 export const privateRoutes = [
 

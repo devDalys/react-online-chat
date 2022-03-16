@@ -33,7 +33,7 @@ const Chat = () => {
                 const msg = [];
                 await snapshot.docs.forEach((doc) => {
                     if (doc.data().createdAt != null){
-                        console.log(doc.data())
+                        // console.log(doc.data())
                     msg.push({...doc.data()})};
                 })
                 setMessage(msg.sort((a, b) => {
@@ -42,9 +42,9 @@ const Chat = () => {
             }
         )
     }
-    getMessage();
     // const [messages] = useCollectionData(collection(db, 'messages'));
     useEffect(async () => {
+        getMessage();
         if (messages) {
             // console.log(messages)
             setIsLoading(false);
@@ -70,10 +70,13 @@ const Chat = () => {
                                 width: 'fit-content',
                                 padding: 5,
                             }}>
+                                <Avatar src={message.photoURL}/>
                                 <Grid container>
-                                    <Avatar src={message.photoURL}/>
                                     <div>{message.displayName}</div>
-                                    {/*<div>{message.createdAt}</div>*/}
+                                  <div>
+                                      <span>{new Date(message.createdAt.seconds*1000).getHours()}</span>:
+                                      <span>{new Date(message.createdAt.seconds*1000).getMinutes()}</span>
+                                  </div>
                                 </Grid>
                                 <div>{message.text}</div>
                             </div>
