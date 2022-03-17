@@ -11,7 +11,7 @@ import {getFirestore, collection, orderBy, getDocs} from 'firebase/firestore'
 import Loader from "./Loader";
 
 const Chat = () => {
-    const [messages,setMessage] = useState();
+    const [messages, setMessage] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const db = getFirestore();
     const auth = getAuth(firebase.firebaseapp);
@@ -28,13 +28,15 @@ const Chat = () => {
         setValue('');
     }
     const getMessage = async () => {
-        const data =await collection(db, 'messages')
+        const data = await collection(db, 'messages')
         getDocs(data).then(async (snapshot) => {
                 const msg = [];
                 await snapshot.docs.forEach((doc) => {
-                    if (doc.data().createdAt != null){
+                    if (doc.data().createdAt != null) {
                         // console.log(doc.data())
-                    msg.push({...doc.data()})};
+                        msg.push({...doc.data()})
+                    }
+                    ;
                 })
                 setMessage(msg.sort((a, b) => {
                     return a.createdAt.seconds - b.createdAt.seconds
@@ -42,14 +44,15 @@ const Chat = () => {
             }
         )
     }
+    getMessage();
     // const [messages] = useCollectionData(collection(db, 'messages'));
-    useEffect(async () => {
-        getMessage();
+    // getMessage();
+    useEffect( () => {
         if (messages) {
             // console.log(messages)
             setIsLoading(false);
         }
-    })
+    },[messages] )
     // setDataMessages(messages.sort((a, b) => a.createdAt.nanoseconds > b.createdAt.nanoseconds))
 
     // if(!loading){console.log(messages.sort((a,b) => a.createdAt.nanoseconds > b.createdAt.nanoseconds));}
@@ -65,20 +68,24 @@ const Chat = () => {
                         {messages?.map(message =>
                             <div style={{
                                 margin: 10,
-                                border: user.uid === message.uid ? '2px solid green' : '2px dashed red',
+                                border: user.uid === message.uid ? '1px solid green' : '1px solid red',
                                 marginLeft: user.uid === message.uid ? 'auto' : '10px',
                                 width: 'fit-content',
                                 padding: 5,
+                                maxWidth:'50%',
+                                minWidth:'20%',
+                                borderRadius:'4px'
                             }}>
-                                <Avatar src={message.photoURL}/>
-                                <Grid container>
+                                <Grid container alignItems={"center"}>
+                                    <Avatar src={message.photoURL} style={{marginRight:'10px'}}  />
                                     <div>{message.displayName}</div>
-                                  <div>
-                                      <span>{new Date(message.createdAt.seconds*1000).getHours()}</span>:
-                                      <span>{new Date(message.createdAt.seconds*1000).getMinutes()}</span>
-                                  </div>
+
                                 </Grid>
-                                <div>{message.text}</div>
+                                <div  >{message.text}</div>
+                                <div style={{display:'flex', right:'0', justifyContent:'flex-end'}}>
+                                    <span>{new Date(message.createdAt.seconds * 1000).getHours()}</span>:
+                                    <span>{new Date(message.createdAt.seconds * 1000).getMinutes()}</span>
+                                </div>
                             </div>
                         )}
                     </div>
